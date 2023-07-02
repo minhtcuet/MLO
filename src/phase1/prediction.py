@@ -37,7 +37,7 @@ async def predict_prob1(request: Request):
         columns = data.get('columns')
 
         predictions = orch.predict(data=rows, columns=columns, model='prob1')
-        drift = cal_psi_pro1(predictions)
+        # drift = cal_psi_pro1(predictions)
 
         response = PredictionResponse(
             id=ids,
@@ -60,7 +60,7 @@ async def predict_prob2(request: Request):
         columns = data.get('columns')
 
         predictions = orch.predict(data=rows, columns=columns, model='prob2')
-        drift = cal_psi_pro2(predictions)
+        # drift = cal_psi_pro2(predictions)
 
         response = PredictionResponse(
             id=ids,
