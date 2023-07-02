@@ -42,7 +42,7 @@ async def predict_prob1(request: Request):
         response = PredictionResponse(
             id=ids,
             predictions=predictions,
-            drift=1 if drift > 0.25 else 0
+            drift=0
         )
 
         return response
@@ -65,7 +65,7 @@ async def predict_prob2(request: Request):
         response = PredictionResponse(
             id=ids,
             predictions=predictions,
-            drift=1 if drift > 0.25 else 0
+            drift=0
         )
 
         return response
