@@ -5,6 +5,10 @@ import json_logging
 from loguru import logger
 from features.orchestrator import Orchestrator, cal_psi_pro1, cal_psi_pro2
 
+import warnings
+
+warnings.filterwarnings("ignore")
+
 app = FastAPI()
 json_logging.init_fastapi(enable_json=True)
 

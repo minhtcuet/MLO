@@ -4,6 +4,10 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import FeatureUnion, Pipeline
 from optbinning import BinningProcess, OptimalBinning
 
+import warnings
+
+warnings.filterwarnings("ignore")
+
 
 class FeatureSelector(BaseEstimator, TransformerMixin):
     def __init__(self, _feature_names):
