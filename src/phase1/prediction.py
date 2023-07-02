@@ -4,8 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 import json_logging
 from loguru import logger
 from features.orchestrator import Orchestrator, cal_psi_pro1, cal_psi_pro2
+from cachetools import TTLCache
 
 import warnings
+
+cache = TTLCache(maxsize=100, ttl=60)
 
 warnings.filterwarnings("ignore")
 
@@ -35,17 +38,28 @@ async def predict(request: Request):
             data = json.loads(data)
 
         ids = data.get('id')
+
+        # Check if the response is cached
+        cached_response = cache.get(ids)
+        if cached_response:
+            return cached_response
+
         rows = data.get('rows')
         columns = data.get('columns')
 
         res = list(orch.predict(data=rows, columns=columns, model='prob1'))
         drift = cal_psi_pro1(res)
 
-        return {
+        response = {
             'id': ids,
             'predictions': res,
             'drift': 1 if drift > 0.25 else 0
         }
+
+        # Cache the response
+        cache[ids] = response
+
+        return response
 
     except Exception as e:
         logger.error(e)
@@ -65,17 +79,28 @@ async def predict_prob2(request: Request):
             data = json.loads(data)
 
         ids = data.get('id')
+
+        # Check if the response is cached
+        cached_response = cache.get(ids)
+        if cached_response:
+            return cached_response
+
         rows = data.get('rows')
         columns = data.get('columns')
 
         res = list(orch.predict(data=rows, columns=columns, model='prob2'))
         drift = cal_psi_pro2(res)
 
-        return {
+        response = {
             'id': ids,
             'predictions': res,
             'drift': 1 if drift > 0.25 else 0
         }
+
+        # Cache the response
+        cache[ids] = response
+
+        return response
 
     except Exception as e:
         logger.error(e)
