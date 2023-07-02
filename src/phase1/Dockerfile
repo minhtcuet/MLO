@@ -21,4 +21,4 @@ ENV PYTHONPATH=/home/project/app
 
 EXPOSE 5000
 
-CMD ["gunicorn", "main:app", "-w", "8", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:5000"]
+CMD ["gunicorn", "prediction:app", "-w", "8", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:5000"]
