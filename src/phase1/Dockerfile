@@ -1,4 +1,4 @@
-FROM python:3.9.2
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
 MAINTAINER minhtran
 
 # make directories suited to your application
