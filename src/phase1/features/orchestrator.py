@@ -34,32 +34,32 @@ class Orchestrator:
         else:
             return list(self.model2.predict_proba(data)[:, 1])
 
-
-a = [-1, 1.05848934e-06, 3.02380710e-06, 7.11921902e-06,
-     1.56224858e-05, 3.33687196e-05, 7.61984550e-05, 1.99051388e-04,
-     6.99545860e-04, 7.59180369e-03, 1.1]
-b = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
-cols_psi = list('ABCDEFGHIK')
-
-c = [-1, 2.56203554e-02, 5.11177520e-02, 8.45635855e-02,
-     1.31936916e-01, 1.98857889e-01, 2.94749266e-01, 4.25216823e-01,
-     5.86057397e-01, 7.66938595e-01, 1.1]
-d = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
-
-
-def cal_psi_pro1(inferences):
-    try:
-        vc = pd.cut(inferences, a, labels=cols_psi).value_counts().values / len(inferences) + 0.0000000001
-        psi = np.sum((vc - 0.1) / np.log(vc / 0.1))
-        return psi
-    except:
-        return 1
-
-
-def cal_psi_pro2(inferences):
-    try:
-        e = pd.cut(inferences, c, labels=cols_psi).value_counts().values / len(inferences) + 0.0000000001
-        psi = np.sum((e - 0.1) / np.log(e / 0.1))
-        return psi
-    except:
-        return 1
+#
+# a = [-1, 1.05848934e-06, 3.02380710e-06, 7.11921902e-06,
+#      1.56224858e-05, 3.33687196e-05, 7.61984550e-05, 1.99051388e-04,
+#      6.99545860e-04, 7.59180369e-03, 1.1]
+# b = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+# cols_psi = list('ABCDEFGHIK')
+#
+# c = [-1, 2.56203554e-02, 5.11177520e-02, 8.45635855e-02,
+#      1.31936916e-01, 1.98857889e-01, 2.94749266e-01, 4.25216823e-01,
+#      5.86057397e-01, 7.66938595e-01, 1.1]
+# d = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+#
+#
+# def cal_psi_pro1(inferences):
+#     try:
+#         vc = pd.cut(inferences, a, labels=cols_psi).value_counts().values / len(inferences) + 0.0000000001
+#         psi = np.sum((vc - 0.1) / np.log(vc / 0.1))
+#         return psi
+#     except:
+#         return 1
+#
+#
+# def cal_psi_pro2(inferences):
+#     try:
+#         e = pd.cut(inferences, c, labels=cols_psi).value_counts().values / len(inferences) + 0.0000000001
+#         psi = np.sum((e - 0.1) / np.log(e / 0.1))
+#         return psi
+#     except:
+#         return 1

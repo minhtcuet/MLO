@@ -15,6 +15,10 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
     def transform(self, X, y=None):
         return X[self._feature_names]
 
+import numpy as np
+from sklearn.base import BaseEstimator, TransformerMixin
+from optbinning import OptimalBinning
+
 
 class WOE(BaseEstimator, TransformerMixin):
     def __init__(self, cats, nums):
@@ -34,12 +38,7 @@ class WOE(BaseEstimator, TransformerMixin):
             self.res[col] = optb
         return self
 
-    def _round(self, number):
-        return int(number * 10 ** 8) / 10 ** 8
-
     def transform(self, X, y=None):
-        for col in X.columns:
-            if col in self.nums + self.cats:
-                X[col] = self.res[col].transform(X[col], metric='woe')
-                X[col] = X[col].apply(self._round)
+        for col in self.cats:
+            X[col] = self.res[col].transform(X[col], metric='woe')
         return X
