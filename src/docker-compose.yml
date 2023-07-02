@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  api:
+    container_name: apiscore
+    restart: always
+    build: ./phase1
+    image: marathon:dev
+    ports:
+      - 5000:5000
+
+  server:
+    container_name: server_nginx13
+    restart: always
+    build: ./nginx
+    ports:
+      - 8089:8089
+    depends_on:
+      - api
+
+networks:
+  default:
+    driver: bridge
