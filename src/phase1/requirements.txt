@@ -12,3 +12,4 @@ dill==0.3.6
 catboost==1.2
 fastapi==0.99.0
 uvicorn==0.22.0
+cachetools==5.3.1
