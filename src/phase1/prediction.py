@@ -105,7 +105,7 @@ def predict():
         rows = data.get('rows')
         columns = data.get('columns')
 
-        res = list(orch.predict(data=rows, columns=columns, model='prob1'))
+        res = orch.predict(data=rows, columns=columns, model='prob1')
 
         return jsonify(
             {
@@ -138,7 +138,7 @@ def predict_prob2():
         rows = data.get('rows')
         columns = data.get('columns')
 
-        res = list(orch.predict(data=rows, columns=columns, model='prob2'))
+        res = orch.predict(data=rows, columns=columns, model='prob2')
 
         return jsonify(
             {

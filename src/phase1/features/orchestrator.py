@@ -18,8 +18,6 @@ class Orchestrator:
         with open('./models/problem2.pkl', 'rb') as g:
             self.model2 = pickle.load(g)
 
-        self.columns = ["feature{}".format(i) for i in range(1, 17)]
-
     def transform(self, X, columns, model):
         df = pd.DataFrame(X, columns=columns)
         if model == 'prob1':

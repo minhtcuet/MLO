@@ -3,6 +3,8 @@ import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import FeatureUnion, Pipeline
 from optbinning import BinningProcess, OptimalBinning
+from joblib import Parallel, delayed
+
 
 import warnings
 
@@ -38,7 +40,20 @@ class WOE(BaseEstimator, TransformerMixin):
             self.res[col] = optb
         return self
 
+    # def transform(self, X, y=None):
+    #     for col in self.cats:
+    #         X[col] = self.res[col].transform(X[col], metric='woe')
+    #     return X
+
+    def _transform_column(self, col, X):
+        return self.res[col].transform(X[col], metric='woe')
+
     def transform(self, X, y=None):
-        for col in self.cats:
-            X[col] = self.res[col].transform(X[col], metric='woe')
+        transformed_columns = Parallel(n_jobs=-1)(
+            delayed(self._transform_column)(col, X) for col in self.cats
+        )
+
+        for col, transformed_column in zip(self.cats, transformed_columns):
+            X[col] = transformed_column
+
         return X
