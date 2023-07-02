@@ -14,7 +14,7 @@ services:
     restart: always
     build: ./nginx
     ports:
-      - 8089:8089
+      - 5040:80
     depends_on:
       - api
 
