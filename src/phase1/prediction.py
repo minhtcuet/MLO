@@ -1,23 +1,32 @@
 import json
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 import json_logging
 from loguru import logger
-from features.orchestrator import Orchestrator, cal_psi
+from features.orchestrator import Orchestrator, cal_psi_pro1, cal_psi_pro2
 
-app = Flask(__name__)
-cors = CORS(app, resources={r'/api/*': {'origin': '*'}})
-
-json_logging.init_flask(enable_json=True)
+app = FastAPI()
+json_logging.init_fastapi(enable_json=True)
 
 orch = Orchestrator()
 
+origins = [
+    "*"
+]
 
-@app.route("/phase-1/prob-1/predict", methods=['POST'])
-def predict():
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.post("/phase-1/prob-1/predict")
+async def predict(request: Request):
     ids, drift, res = None, 0, []
     try:
-        data = request.get_json(force=True)
+        data = await request.json()
         if not isinstance(data, dict):
             data = json.loads(data)
 
@@ -26,32 +35,28 @@ def predict():
         columns = data.get('columns')
 
         res = list(orch.predict(data=rows, columns=columns, model='prob1'))
-        drift = cal_psi(res)
+        drift = cal_psi_pro1(res)
 
-        return jsonify(
-            {
-                'id': ids,
-                'predictions': res,
-                'drift': 1 if drift > 0.25 else 0
-            }
-        )
+        return {
+            'id': ids,
+            'predictions': res,
+            'drift': 1 if drift > 0.25 else 0
+        }
 
     except Exception as e:
         logger.error(e)
-        return jsonify(
-            {
-                'id': ids,
-                'predictions': res,
-                'drift': drift
-            }
-        )
+        return {
+            'id': ids,
+            'predictions': res,
+            'drift': drift
+        }
 
 
-@app.route("/phase-1/prob-2/predict", methods=['POST'])
-def predict_prob2():
+@app.post("/phase-1/prob-2/predict")
+async def predict_prob2(request: Request):
     ids, drift, res = None, 0, []
     try:
-        data = request.get_json(force=True)
+        data = await request.json()
         if not isinstance(data, dict):
             data = json.loads(data)
 
@@ -60,25 +65,24 @@ def predict_prob2():
         columns = data.get('columns')
 
         res = list(orch.predict(data=rows, columns=columns, model='prob2'))
-        drift = cal_psi(res)
+        drift = cal_psi_pro2(res)
 
-        return jsonify(
-            {
-                'id': ids,
-                'predictions': res,
-                'drift': 1 if drift > 0.25 else 0
-            }
-        )
+        return {
+            'id': ids,
+            'predictions': res,
+            'drift': 1 if drift > 0.25 else 0
+        }
 
     except Exception as e:
         logger.error(e)
-        return jsonify(
-            {
-                'id': ids,
-                'predictions': res,
-                'drift': drift
-            }
-        )
+        return {
+            'id': ids,
+            'predictions': res,
+            'drift': drift
+        }
+
 
 if __name__ == '__main__':
-    app.run()
+    import uvicorn
+
+    uvicorn.run(app)
