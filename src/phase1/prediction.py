@@ -31,7 +31,7 @@ class PredictionResponse(BaseModel):
 @app.post("/phase-1/prob-1/predict", response_model=PredictionResponse)
 async def predict_prob1(request: Request):
     try:
-        data = request.dict()
+        data = await request.json()
         ids = data.get('id')
         rows = data.get('rows')
         columns = data.get('columns')
@@ -54,7 +54,7 @@ async def predict_prob1(request: Request):
 @app.post("/phase-1/prob-2/predict", response_model=PredictionResponse)
 async def predict_prob2(request: Request):
     try:
-        data = request.dict()
+        data = await request.json()
         ids = data.get('id')
         rows = data.get('rows')
         columns = data.get('columns')
