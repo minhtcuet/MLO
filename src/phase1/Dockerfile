@@ -17,8 +17,8 @@ COPY . /home/project/app
 COPY ./models /home/project/app/models
 
 ENV PYTHONPATH=/home/project/app
-# ENTRYPOINT ./develop.sh
+ENTRYPOINT ./develop.sh
 
-EXPOSE 5000
-
-CMD ["gunicorn", "prediction:app", "-w", "8", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:5000"]
+# EXPOSE 5000
+#
+# CMD ["gunicorn", "prediction:app", "-w", "8", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:5000"]
