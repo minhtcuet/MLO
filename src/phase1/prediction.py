@@ -83,7 +83,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json_logging
 from loguru import logger
-from features.orchestrator import Orchestrator, cal_psi
+from features.orchestrator import Orchestrator
 
 app = Flask(__name__)
 cors = CORS(app, resources={r'/api/*': {'origin': '*'}})
@@ -106,7 +106,6 @@ def predict():
         columns = data.get('columns')
 
         res = list(orch.predict(data=rows, columns=columns, model='prob1'))
-        drift = cal_psi(res)
 
         return jsonify(
             {
@@ -140,7 +139,6 @@ def predict_prob2():
         columns = data.get('columns')
 
         res = list(orch.predict(data=rows, columns=columns, model='prob2'))
-        drift = cal_psi(res)
 
         return jsonify(
             {
