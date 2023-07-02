@@ -81,14 +81,14 @@
 import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import json_logging
+# import json_logging
 from loguru import logger
 from features.orchestrator import Orchestrator
 
 app = Flask(__name__)
 cors = CORS(app, resources={r'/api/*': {'origin': '*'}})
 
-json_logging.init_flask(enable_json=True)
+# json_logging.init_flask(enable_json=True)
 
 orch = Orchestrator()
 
