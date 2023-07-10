@@ -4,7 +4,7 @@ services:
   api:
     container_name: apiscore
     restart: always
-    build: ./phase1
+    build: ./phase2
     image: marathon:dev
     ports:
       - 5000:5000 # 5000:5000
