@@ -3,12 +3,6 @@ import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import FeatureUnion, Pipeline
 from optbinning import BinningProcess, OptimalBinning
-from joblib import Parallel, delayed
-
-
-import warnings
-
-warnings.filterwarnings("ignore")
 
 
 class FeatureSelector(BaseEstimator, TransformerMixin):
@@ -19,7 +13,11 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X, y=None):
-        return X[self._feature_names]
+        return X[:, self._feature_names]
+
+import numpy as np
+from sklearn.base import BaseEstimator, TransformerMixin
+from optbinning import OptimalBinning
 
 
 class WOE(BaseEstimator, TransformerMixin):
@@ -30,17 +28,17 @@ class WOE(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y):
         for col in self.cats:
-            optb = OptimalBinning(name=col, dtype="categorical", solver="cp")
-            optb.fit(X[col].values, y.values)
+            optb = OptimalBinning(name=str(col), dtype="categorical", solver="cp")
+            optb.fit(X[:, col], y)
             self.res[col] = optb
 
         for col in self.nums:
-            optb = OptimalBinning(name=col, dtype="numerical", solver="cp")
-            optb.fit(X[col].values, y.values)
+            optb = OptimalBinning(name=str(col), dtype="numerical", solver="cp")
+            optb.fit(X[:, col], y)
             self.res[col] = optb
         return self
 
     def transform(self, X, y=None):
         for col in self.cats:
-            X[col] = self.res[col].transform(X[col], metric='woe')
+            X[:, col] = self.res[col].transform(X[:, col], metric='woe')
         return X

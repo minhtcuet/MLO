@@ -2,6 +2,7 @@ import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 # import json_logging
+import numpy as np
 from loguru import logger
 from features.orchestrator import Orchestrator
 
@@ -18,14 +19,12 @@ def predict():
     ids, drift, res = None, 0, []
     try:
         data = request.get_json(force=True)
-        if not isinstance(data, dict):
-            data = json.loads(data)
 
+        logger.info("Get info")
         ids = data.get('id')
-        rows = data.get('rows')
-        columns = data.get('columns')
+        rows = np.array(data.get('rows'))
 
-        res = orch.predict(data=rows, columns=columns, model='prob1')
+        res = orch.predict(data=rows, model='prob1')
 
         return jsonify(
             {
@@ -51,15 +50,13 @@ def predict_prob2():
     ids, drift, res = None, 0, []
     try:
         data = request.get_json(force=True)
-        if not isinstance(data, dict):
-            data = json.loads(data)
 
+        logger.info("Get info")
         ids = data.get('id')
-        rows = data.get('rows')
-        columns = data.get('columns')
+        rows = np.array(data.get('rows'))
 
-        res = orch.predict(data=rows, columns=columns, model='prob2')
-
+        res = orch.predict(data=rows, model='prob2')
+        logger.info("Return")
         return jsonify(
             {
                 'id': ids,

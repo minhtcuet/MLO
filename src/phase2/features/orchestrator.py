@@ -1,5 +1,6 @@
 import pickle
 import pandas as pd
+from loguru import logger
 
 
 class Orchestrator:
@@ -17,16 +18,17 @@ class Orchestrator:
         with open('./models/problem2.pkl', 'rb') as g:
             self.model2 = pickle.load(g)
 
-    def transform(self, X, columns, model):
-        df = pd.DataFrame(X, columns=columns)
+    def transform(self, X, model):
         if model == 'prob1':
-            return self.pipeline1.transform(df)
+            return self.pipeline1.transform(X)
         else:
-            return self.pipeline2.transform(df)
+            return self.pipeline2.transform(X)
 
-    def predict(self, data, columns, model):
-        data = self.transform(data, columns, model)
+    def predict(self, data, model):
+        logger.info("Transform")
+        data = self.transform(data, model)
+        logger.info("Predict")
         if model == 'prob1':
             return list(self.model1.predict_proba(data)[:, 1])
         else:
-            return list(self.model2.predict(data)[:, 0].tolist())
+            return list(self.model2.predict(data)[:, 0])
