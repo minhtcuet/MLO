@@ -1,6 +1,8 @@
 import pickle
 import pandas as pd
 from loguru import logger
+from src.phase2 import cython_code
+# import cython_code
 
 
 class Orchestrator:
@@ -28,7 +30,8 @@ class Orchestrator:
         logger.info("Transform")
         data = self.transform(data, model)
         logger.info("Predict")
+
         if model == 'prob1':
-            return list(self.model1.predict_proba(data)[:, 1])
+            return cython_code.predict_proba_catboost(data, self.model1)
         else:
-            return list(self.model2.predict(data)[:, 0])
+            return cython_code.predict_catboost(data, self.model2)

@@ -5,11 +5,10 @@ from flask_cors import CORS
 import numpy as np
 from loguru import logger
 from features.orchestrator import Orchestrator
+import cython_code
 
 app = Flask(__name__)
 cors = CORS(app, resources={r'/api/*': {'origin': '*'}})
-
-# json_logging.init_flask(enable_json=True)
 
 orch = Orchestrator()
 
@@ -22,9 +21,9 @@ def predict():
 
         logger.info("Get info")
         ids = data.get('id')
-        rows = np.array(data.get('rows'))
-
+        rows = cython_code.convert2numpyarr(data.get('rows'))
         res = orch.predict(data=rows, model='prob1')
+        logger.info("Return")
 
         return jsonify(
             {
@@ -53,7 +52,7 @@ def predict_prob2():
 
         logger.info("Get info")
         ids = data.get('id')
-        rows = np.array(data.get('rows'))
+        rows = cython_code.convert2numpyarr(data.get('rows'))
 
         res = orch.predict(data=rows, model='prob2')
         logger.info("Return")
