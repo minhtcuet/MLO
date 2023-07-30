@@ -8,8 +8,6 @@ services:
     ports:
       - 5000:5000 # 5000:5000
     entrypoint: /bin/sh -c "uvicorn  prediction:app --host 0.0.0.0 --port 5000"
-    deploy:
-      replicas: 7
 
   server:
     container_name: server_nginx13
