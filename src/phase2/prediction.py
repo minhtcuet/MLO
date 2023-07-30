@@ -21,8 +21,8 @@ def predict():
     try:
         data = request.get_json(force=True)
 
-        with open('./log/problem1_{}.txt'.format(uuid.uuid4()), 'w') as f:
-            f.write(str(data))
+        # with open('./log/problem1_{}.txt'.format(uuid.uuid4()), 'w') as f:
+        #     f.write(str(data))
 
         # logger.info("Get info")
         ids = data.get('id')
@@ -46,7 +46,7 @@ def predict():
         )
 
     except Exception as e:
-        # logger.error(e)
+        logger.error(e)
         return jsonify(
             {
                 'id': ids,
@@ -62,8 +62,8 @@ def predict_prob2():
     try:
         data = request.get_json(force=True)
 
-        with open('./log/problem2_{}.txt'.format(uuid.uuid4()), 'w') as f:
-            f.write(str(data))
+        # with open('./log/problem2_{}.txt'.format(uuid.uuid4()), 'w') as f:
+        #     f.write(str(data))
 
         # logger.info("Get info")
         ids = data.get('id')
@@ -85,7 +85,7 @@ def predict_prob2():
         )
 
     except Exception as e:
-        # logger.error(e)
+        logger.error(e)
         return jsonify(
             {
                 'id': ids,
