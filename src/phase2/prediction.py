@@ -28,8 +28,8 @@ def predict():
         ids = data.get('id')
         columns = data.get('columns')
 
-        # rows = cython_code.convert2numpyarr(data.get('rows'))
-        rows = np.asarray(data.get('rows'))
+        rows = cython_code.convert2numpyarr(data.get('rows'))
+        # rows = np.asarray(data.get('rows'))
 
         # logger.info("Reorder features")
         new_column_indexes = [columns.index(name) for name in COLUMNS]
@@ -70,8 +70,8 @@ def predict_prob2():
         ids = data.get('id')
         columns = data.get('columns')
 
-        # rows = cython_code.convert2numpyarr(data.get('rows'))
-        rows = np.asarray(data.get('rows'))
+        rows = cython_code.convert2numpyarr(data.get('rows'))
+        # rows = np.asarray(data.get('rows'))
 
         # logger.info("Reorder features")
         new_column_indexes = [columns.index(name) for name in COLUMNS]
