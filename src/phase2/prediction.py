@@ -6,6 +6,7 @@ import numpy as np
 from loguru import logger
 from features.orchestrator import Orchestrator
 import cython_code
+import uuid
 
 app = Flask(__name__)
 cors = CORS(app, resources={r'/api/*': {'origin': '*'}})
@@ -19,6 +20,9 @@ def predict():
     ids, drift, res = None, 0, []
     try:
         data = request.get_json(force=True)
+
+        with open('./log/problem1_{}.txt'.format(uuid.uuid4()), 'w') as f:
+            f.write(str(data))
 
         # logger.info("Get info")
         ids = data.get('id')
@@ -57,6 +61,9 @@ def predict_prob2():
     ids, drift, res = None, 0, []
     try:
         data = request.get_json(force=True)
+
+        with open('./log/problem2_{}.txt'.format(uuid.uuid4()), 'w') as f:
+            f.write(str(data))
 
         # logger.info("Get info")
         ids = data.get('id')
