@@ -35,3 +35,4 @@ class Orchestrator:
             return cython_code.predict_proba_catboost(data, self.model1)
         else:
             return cython_code.predict_catboost(data, self.model2)
+

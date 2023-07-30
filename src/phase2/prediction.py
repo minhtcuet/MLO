@@ -42,7 +42,7 @@ def predict():
         )
 
     except Exception as e:
-        logger.error(e)
+        # logger.error(e)
         return jsonify(
             {
                 'id': ids,
@@ -78,7 +78,7 @@ def predict_prob2():
         )
 
     except Exception as e:
-        logger.error(e)
+        # logger.error(e)
         return jsonify(
             {
                 'id': ids,
