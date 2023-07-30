@@ -107,6 +107,7 @@ from fastapi.responses import JSONResponse
 from features.orchestrator import Orchestrator
 from loguru import logger
 import cython_code
+import os
 
 
 app = FastAPI()
@@ -122,6 +123,8 @@ async def predict(request: Request):
 
         ids = data.get('id')
         columns = data.get('columns')
+
+        logger.info(os.getpid())
 
         rows = cython_code.convert2numpyarr(data.get('rows'))
 
@@ -157,6 +160,8 @@ async def predict_prob2(request: Request):
 
         ids = data.get('id')
         columns = data.get('columns')
+
+        logger.info(os.getpid())
 
         rows = cython_code.convert2numpyarr(data.get('rows'))
 
