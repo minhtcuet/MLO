@@ -25,6 +25,8 @@ def predict():
         columns = data.get('columns')
 
         rows = cython_code.convert2numpyarr(data.get('rows'))
+
+        logger.info("Reorder features")
         new_column_indexes = [columns.index(name) for name in COLUMNS]
         rows = rows[:, new_column_indexes]
 

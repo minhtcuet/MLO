@@ -17,6 +17,9 @@ COPY . /home/project/app
 COPY ./models /home/project/app/models
 
 ENV PYTHONPATH=/home/project/app
+
+RUN python setup.py build_ext --inplace
+
 ENTRYPOINT ./develop.sh
 
 # EXPOSE 5000

@@ -1,8 +1,8 @@
 import pickle
 import pandas as pd
 from loguru import logger
-from src.phase2 import cython_code
-# import cython_code
+# from src.phase2 import cython_code
+import cython_code
 
 
 class Orchestrator:
