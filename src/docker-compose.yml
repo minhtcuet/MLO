@@ -1,32 +1,3 @@
-#version: '2'
-#
-#services:
-#  api:
-#    container_name: apiscore
-#    restart: always
-#    build: ./phase2
-#    image: marathon:dev
-#    ports:
-#      - 5000:5000 # 5000:5000
-#    volumes:
-#      - /home/ubuntu/MLO/src/phase2/log:/home/project/app/log
-#
-#  server:
-#    container_name: server_nginx13
-#    restart: always
-#    build: ./nginx
-#    ports:
-#      - 5040:5040 # 5040:5040
-#    depends_on:
-#      - api
-#
-#
-#networks:
-#  default:
-#    driver: bridge
-
-
-
 version: "3.7"
 services:
   api:
