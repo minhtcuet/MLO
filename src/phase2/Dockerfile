@@ -20,7 +20,7 @@ ENV PYTHONPATH=/home/project/app
 
 RUN python setup.py build_ext --inplace
 
-ENTRYPOINT ./develop.sh
+# ENTRYPOINT ./develop.sh
 
 # EXPOSE 5000
 #
