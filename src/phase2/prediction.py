@@ -11,6 +11,7 @@ app = Flask(__name__)
 cors = CORS(app, resources={r'/api/*': {'origin': '*'}})
 
 orch = Orchestrator()
+COLUMNS = ['feature{}'.format(i) for i in range(1, 42)]
 
 
 @app.route("/phase-2/prob-1/predict", methods=['POST'])
@@ -21,7 +22,12 @@ def predict():
 
         logger.info("Get info")
         ids = data.get('id')
+        columns = data.get('columns')
+
         rows = cython_code.convert2numpyarr(data.get('rows'))
+        new_column_indexes = [columns.index(name) for name in COLUMNS]
+        rows = rows[:, new_column_indexes]
+
         res = orch.predict(data=rows, model='prob1')
         logger.info("Return")
 
@@ -52,7 +58,12 @@ def predict_prob2():
 
         logger.info("Get info")
         ids = data.get('id')
+        columns = data.get('columns')
+
         rows = cython_code.convert2numpyarr(data.get('rows'))
+        logger.info("Reorder features")
+        new_column_indexes = [columns.index(name) for name in COLUMNS]
+        rows = rows[:, new_column_indexes]
 
         res = orch.predict(data=rows, model='prob2')
         logger.info("Return")
