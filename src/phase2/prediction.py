@@ -20,18 +20,18 @@ def predict():
     try:
         data = request.get_json(force=True)
 
-        logger.info("Get info")
+        # logger.info("Get info")
         ids = data.get('id')
         columns = data.get('columns')
 
         rows = cython_code.convert2numpyarr(data.get('rows'))
 
-        logger.info("Reorder features")
+        # logger.info("Reorder features")
         new_column_indexes = [columns.index(name) for name in COLUMNS]
         rows = rows[:, new_column_indexes]
 
         res = orch.predict(data=rows, model='prob1')
-        logger.info("Return")
+        # logger.info("Return")
 
         return jsonify(
             {
@@ -58,17 +58,17 @@ def predict_prob2():
     try:
         data = request.get_json(force=True)
 
-        logger.info("Get info")
+        # logger.info("Get info")
         ids = data.get('id')
         columns = data.get('columns')
 
         rows = cython_code.convert2numpyarr(data.get('rows'))
-        logger.info("Reorder features")
+        # logger.info("Reorder features")
         new_column_indexes = [columns.index(name) for name in COLUMNS]
         rows = rows[:, new_column_indexes]
 
         res = orch.predict(data=rows, model='prob2')
-        logger.info("Return")
+        # logger.info("Return")
         return jsonify(
             {
                 'id': ids,

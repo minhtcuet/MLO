@@ -27,9 +27,9 @@ class Orchestrator:
             return self.pipeline2.transform(X)
 
     def predict(self, data, model):
-        logger.info("Transform")
+        # logger.info("Transform")
         data = self.transform(data, model)
-        logger.info("Predict")
+        # logger.info("Predict")
 
         if model == 'prob1':
             return cython_code.predict_proba_catboost(data, self.model1)
