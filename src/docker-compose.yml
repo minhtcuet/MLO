@@ -7,9 +7,10 @@ services:
     build: ./phase2
     image: marathon:dev
     ports:
-      - 5000:5000 # 5000:5000
-    volumes:
-      - /home/ubuntu/MLO/src/phase2/log:/home/project/app/log
+      - 5000:5000
+#    volumes:
+#      - /home/ubuntu/MLO/src/phase2/log:/home/project/app/log
+
 
   server:
     container_name: server_nginx13
